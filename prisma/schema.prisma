@@ -1,0 +1,41 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enum para o Kanban (nível de andamento)
+enum TaskStatus {
+  TO_DO       // A Fazer (coluna inicial)
+  IN_PROGRESS // Em Andamento
+  DONE        // Concluído
+}
+
+// Enum para o To-Do List (nível de prioridade)
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model Task {
+  id          String       @id @default(uuid())
+  title       String
+  description String?
+  
+  // Para o Calendário (nível Mês/Dia)
+  dueDate     DateTime?    
+  
+  // Para o Kanban (nível Andamento)
+  status      TaskStatus   @default(TO_DO) 
+  
+  // Para o To-Do List (nível Tarefa)
+  priority    TaskPriority @default(MEDIUM) 
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}

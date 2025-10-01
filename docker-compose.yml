@@ -1,0 +1,23 @@
+services:
+  # Serviço para o banco de dados PostgreSQL
+  db:
+    # Imagem oficial do PostgreSQL
+    image: postgres:16-alpine
+    # Nome do container (opcional, para fácil identificação)
+    container_name: organizer_postgres
+    # Define variáveis de ambiente para o banco de dados
+    environment:
+      POSTGRES_USER: user # Usuário do banco
+      POSTGRES_PASSWORD: admin # Senha do banco
+      POSTGRES_DB: organizerdb # Nome do banco de dados
+    # Mapeia a porta do container (5432) para a porta 5432 da sua máquina
+    ports:
+      - "5432:5432"
+    # Monta um volume para persistir os dados
+    # Isso garante que seus dados não serão perdidos ao parar o container
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+# Definição dos volumes
+volumes:
+  postgres_data:
